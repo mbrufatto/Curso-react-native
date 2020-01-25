@@ -10,10 +10,21 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "moment": "^2.24.0",
     "react": "16.9.0",
-    "react-native": "0.61.5",
-    "react-native-vector-icons": "^6.6.0"
+    "react-native": "^0.61.5",
+    "react-native-action-button": "^2.8.5",
+    "react-native-drawer": "^2.5.1",
+    "react-native-gesture-handler": "^1.5.3",
+    "react-native-gravatar": "^1.0.2",
+    "react-native-reanimated": "^1.7.0",
+    "react-native-screens": "^2.0.0-alpha.29",
+    "react-native-swipeable": "^0.6.0",
+    "react-native-vector-icons": "^6.6.0",
+    "react-navigation": "^4.0.10",
+    "react-navigation-drawer": "^2.3.3",
+    "swipeable": "^1.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
