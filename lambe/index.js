@@ -9,6 +9,9 @@ import {name as appName} from './app.json'
 
 import storeConfig from './src/store/storeConfig'
 
+import axios from 'axios'
+axios.defaults.baseURL = 'https://lambe-65c0a.firebaseio.com/'
+
 const store = storeConfig()
 
 const Redux = () => (

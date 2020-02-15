@@ -6,13 +6,29 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image,
 
 import ImagePicker from 'react-native-image-picker'
 
+const noUser = 'Você precisa estar logado'
+
 class AddPhoto extends Component {
     state = {
         image: null,
         comment: '',
     }
 
+    componentDidUpdate = prevProps => {
+        if(prevProps.loading && !this.props.loading) {
+            this.setState({
+                image: null,
+                comment: ''
+            })
+            this.props.navigation.navigate('Feed')
+        }
+    }
+
     pickImage = () => {
+        if(!this.props.name) {
+            Alert.alert('Falha!', noUser)
+            return
+        }
         ImagePicker.showImagePicker({
             title: 'Escolha a Imagem',
             maxHeight: 600,
@@ -25,6 +41,10 @@ class AddPhoto extends Component {
     }
 
     save = async () => {
+        if(!this.props.name) {
+            Alert.alert('Falha!', noUser)
+            return
+        }
         this.props.onAddPost({
             id: Math.random(),
             nickname: this.props.name,
@@ -35,9 +55,6 @@ class AddPhoto extends Component {
                 comment: this.state.comment
             }]
         })
-
-        this.setState({ image: null, comment: '' })
-        this.props.navigation.navigate('Feed')
     }
     render() {
         return (
@@ -52,8 +69,11 @@ class AddPhoto extends Component {
                     </TouchableOpacity>
                     <TextInput placeholder='Algum comentário para a foto?' 
                         style={styles.input} value={this.state.comment}
+                        editable={this.props.name != null }
                         onChangeText={ comment => this.setState({ comment })} />
-                    <TouchableOpacity onPress={this.save} style={styles.buttom}>
+                    <TouchableOpacity onPress={this.save} 
+                        disable={this.props.loading} 
+                        style={[styles.buttom, this.props.loading ? styles.buttonDisable : null]}>
                         <Text style={styles.buttomText}>Salvar</Text>
                     </TouchableOpacity>
                 </View>
@@ -96,13 +116,17 @@ const styles = StyleSheet.create({
     input: {
         marginTop: 20,
         width: '90%'
+    },
+    buttonDisable: {
+        backgroundColor: '#AAA'
     }
 })
 
-const mapStateToProps = ({user}) => {
+const mapStateToProps = ({user, posts}) => {
     return {
         email: user.email,
-        name: user.name
+        name: user.name,
+        loading: posts.isUploading
     }
 }
 
