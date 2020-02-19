@@ -10,6 +10,12 @@ class Feed extends Component {
         this.props.onFetchPosts()
     }
 
+    componentDidUpdate = prevProps => {
+        if(prevProps.isLoading && !this.props.isLoading) {
+            this.props.navigation.navigate('Profile')
+        }
+    }
+
     render() {
         return (
             <View style={styles.container} >
