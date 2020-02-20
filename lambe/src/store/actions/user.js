@@ -3,7 +3,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 
 const authBaseURL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty'
-const API_KEY = 'AIzaSyDDCbn7que6PnJ0jPUkAZdhHTa8tI6TIhQ'
+const API_KEY = 'AIzaSyC8JU-CkAMMX5a4-bRKlfOkDZLF-J9Hvog'
 
 export const userLogged = user => {
     return {
@@ -32,8 +32,11 @@ export const createUser = user => {
                         name: user.name
                     })
                         .catch(err => console.log(err))
-                        .then(res => {
-                            console.log('Usuário criado com sucesso')
+                        .then(() => {
+                            delete user.password
+                            user.id = res.data.localId
+                            dispatch(userLogged(user))
+                            dispatch(userLoaded())
                         })
                 }
             })
@@ -54,7 +57,6 @@ export const userLoaded = () => {
 
 export const login = user => {
     return dispatch => {
-        console.log('Logando')
         dispatch(loadingUser())
         axios.post(`${authBaseURL}/veryPassword?key=${API_KEY}`, {
             email: user.email,
@@ -62,14 +64,12 @@ export const login = user => {
             returnSecureToken: true
         })
             .catch(err => console.log(err))
-            .then(resp => {
-                console.log('Logado')
-                if(resp.data.localId) {
-                   axios.get(`/users/${resp.data.localId}.json`)
+            .then(res => {
+                if(res.data.localId) {
+                   axios.get(`/users/${res.data.localId}.json`)
                         .catch(err => console.log(err))
                         .then(res => {
-                            console.log(res.data)
-                            user.password = null
+                            delete user.password
                             user.name = res.data.name
                             dispatch(userLogged(user))
                             dispatch(userLoaded())
