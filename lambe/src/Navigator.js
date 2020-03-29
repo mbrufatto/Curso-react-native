@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createStackNavigator } from 'react-navigation-stack'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
+import Splash from './screens/Splash'
 import Feed from './screens/Feed'
 import AddPhoto from './screens/AddPhoto'
 import Profile from './screens/Profile'
@@ -63,4 +64,11 @@ const MenuConfig = {
 
 const MenuNavigator = createBottomTabNavigator(MenuRoutes, MenuConfig)
 
-export default createAppContainer(MenuNavigator)
+const SplashRouter = createSwitchNavigator({
+    Splash: Splash,
+    App: MenuNavigator
+}, {
+    initialRouteName: 'Splash'
+})
+
+export default SplashRouter
