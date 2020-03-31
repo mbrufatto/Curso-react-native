@@ -34,7 +34,7 @@ export const createUser = user => {
                         .catch(err => {
                             dispatch(setMessage({
                                 title: 'Error',
-                                text: 'Ocorreu um erro inesperado!'
+                                text: 'Ocorreu um erro inesperado!' + err
                             }))
                         })
                         .then(() => {
@@ -59,22 +59,28 @@ export const userLoaded = () => {
 
 export const login = user => {
     return dispatch => {
-        console.log("Teste Login" )
         dispatch(loadingUser())
-        console.log("Teste Depois do Dispach" )
-        console.log(`${authBaseURL}/veryPassword?key=${API_KEY}`)
-        axios.post(`${authBaseURL}/veryPassword?key=${API_KEY}`, {
+        axios.post(`${authBaseURL}/verifyPassword?key=${API_KEY}`, {
             email: user.email,
             password: user.password,
             returnSecureToken: true
         })
-            .catch(err => console.log(err))
+            .catch(err => {
+                dispatch(setMessage({
+                    title: 'Erro',
+                    text: 'Ocorreu um erro inesperado!' + err
+                }))
+            })
             .then(res => {
-                console.log("Teste " + res.data )
-                if(res.data.localId) {
+                if (res.data.localId) {
                     user.token = res.data.idToken
-                   axios.get(`/users/${res.data.localId}.json`)
-                        .catch(err => console.log(err))
+                    axios.get(`/users/${res.data.localId}.json`)
+                        .catch(err => {
+                            dispatch(setMessage({
+                                title: 'Erro',
+                                text: 'Ocorreu um erro inesperado!' + err
+                            }))
+                        })
                         .then(res => {
                             delete user.password
                             user.name = res.data.name

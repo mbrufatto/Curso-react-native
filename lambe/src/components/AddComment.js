@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addComment } from '../store/actions/posts'
@@ -13,7 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 class AddComment extends Component {
-    state = { 
+    state = {
         comment: '',
         editMode: false
     }
@@ -65,7 +64,6 @@ class AddComment extends Component {
         )
     }
 }
-
 
 const styles = StyleSheet.create({
     container: {

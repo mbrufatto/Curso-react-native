@@ -1,8 +1,13 @@
-import { SET_POSTS, ADD_COMMENT, CREATING_POST, POST_CREATED } from '../actions/actionTypes'
+import {
+    SET_POSTS,
+    ADD_COMMENT,
+    CREATING_POST,
+    POST_CREATED
+} from '../actions/actionTypes'
 
 const initialState = {
     posts: [],
-    isUploading: false
+    isUploading: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -12,12 +17,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 posts: action.payload
             }
-        case ADD_COMMENT: 
+        case ADD_COMMENT:
             return {
                 ...state,
-                posts: state.posts.map( post => {
-                    if(post.id === action.payload.postId) {
-                        if(post.comments) {
+                posts: state.posts.map(post => {
+                    if (post.id === action.payload.postId) {
+                        if (post.comments) {
                             post.comments = post.comments.concat(
                                 action.payload.comment
                             )
@@ -25,6 +30,7 @@ const reducer = (state = initialState, action) => {
                             post.comments = [action.payload.comment]
                         }
                     }
+                    return post
                 })
             }
         case CREATING_POST:
@@ -33,12 +39,12 @@ const reducer = (state = initialState, action) => {
                 isUploading: true
             }
         case POST_CREATED:
-            return { 
+            return {
                 ...state,
                 isUploading: false
             }
         default:
-           return state
+            return state
     }
 }
 

@@ -22,14 +22,14 @@ const loginOrProfileRouter = createSwitchNavigator({
     Profile: Profile,
     Auth: authRouter
 }, {
-    initialRouteName: 'Profile'
+    initialRouteName: 'Auth'
 })
 
 const MenuRoutes = {
     Feed: {
         name: 'Feed',
         screen: Feed,
-        navigationOptions:{
+        navigationOptions: {
             title: 'Feed',
             tabBarIcon: ({ tintColor }) =>
                 <Icon name='home' size={30} color={tintColor} />
@@ -40,7 +40,7 @@ const MenuRoutes = {
         screen: AddPhoto,
         navigationOptions: {
             title: 'Add Picture',
-            tabBarIcon: ({ tintColor }) => 
+            tabBarIcon: ({ tintColor }) =>
                 <Icon name='camera' size={30} color={tintColor} />
         }
     },
@@ -49,7 +49,7 @@ const MenuRoutes = {
         screen: loginOrProfileRouter,
         navigationOptions: {
             title: 'Profile',
-            tabBarIcon: ({ tintColor: color }) => 
+            tabBarIcon: ({ tintColor: color }) =>
                 <Icon name='user' size={30} color={color} />
         }
     }
@@ -66,9 +66,10 @@ const MenuNavigator = createBottomTabNavigator(MenuRoutes, MenuConfig)
 
 const SplashRouter = createSwitchNavigator({
     Splash: Splash,
-    App: MenuNavigator
+    App: MenuNavigator,
 }, {
     initialRouteName: 'Splash'
 })
 
-export default SplashRouter
+
+export default createAppContainer(MenuNavigator) 

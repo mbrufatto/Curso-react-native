@@ -1,21 +1,25 @@
-import { USER_LOGGED_IN, USER_LOGGED_OUT, LOADING_USER, USER_LOADED } from '../actions/actionTypes'
-import { act } from 'react-test-renderer'
+import {
+    USER_LOGGED_IN,
+    USER_LOGGED_OUT,
+    LOADING_USER,
+    USER_LOADED
+} from '../actions/actionTypes'
 
 const initialState = {
     name: null,
     email: null,
     isLoading: false,
-    token: null
+    token: null,
 }
 
 const reducer = (state = initialState, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case USER_LOGGED_IN:
             return {
                 ...state,
                 name: action.payload.name,
                 email: action.payload.email,
-                token: action.payload.token
+                token: action.payload.token,
             }
         case USER_LOGGED_OUT:
             return {
@@ -27,7 +31,7 @@ const reducer = (state = initialState, action) => {
                 isLoading: true
             }
         case USER_LOADED:
-            return { 
+            return {
                 ...state,
                 isLoading: false
             }

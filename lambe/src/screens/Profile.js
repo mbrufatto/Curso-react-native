@@ -11,13 +11,14 @@ class Profile extends Component {
     }
 
     render() {
-        const options = { email: this.props.email , secure: true }
+        const options = { email: this.props.email, secure: true }
         return (
             <View style={styles.container}>
                 <Gravatar options={options} style={styles.avatar} />
-                <Text style={styles.nickname}>Teste</Text>
-                <Text style={styles.email}>test@teste</Text>
-                <TouchableOpacity onPress={this.logout} style={styles.buttom}>
+                <Text style={styles.nickname}>{this.props.name}</Text>
+                <Text style={styles.email}>{this.props.email}</Text>
+                <TouchableOpacity onPress={this.logout}
+                    style={styles.buttom}>
                     <Text style={styles.buttomText}>Sair</Text>
                 </TouchableOpacity>
             </View>
@@ -56,12 +57,12 @@ const styles = StyleSheet.create({
     }
 })
 
-const mapStateToProps = ({user}) => {
+const mapStateToProps = ({ user }) => {
     return {
         email: user.email,
         name: user.name,
     }
-} 
+}
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -69,4 +70,5 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
+// export default Profile
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

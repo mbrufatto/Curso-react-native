@@ -7,33 +7,34 @@ export const addPost = post => {
     return (dispatch, getState) => {
         dispatch(creatingPost())
         axios({
-          url: 'uploadImage',
-          baseURL: 'https://us-central1-lambe-65c0a.cloudfunctions.net',
-          method: 'post',
-          data: {
-              image: post.image.base64
-          }
+            url: 'uploadImage',
+            baseURL: 'https://us-central1-lambe-134f8.cloudfunctions.net',
+            method: 'post',
+            data: {
+                image: post.image.base64
+            }
         })
             .catch(err => {
                 dispatch(setMessage({
                     title: 'Erro',
-                    text: 'Ocorreu um erro inesperado'
+                    text: 'Ocorreu um erro inesperado! AddPost 1' + err
                 }))
             })
             .then(resp => {
                 post.image = resp.data.imageUrl
-                axios.post(`/posts.json?auth=${getState().user.token}`, { ...post})
+                axios.post(`/posts.json?auth=${getState().user.token}`, { ...post })
                     .catch(err => {
                         dispatch(setMessage({
                             title: 'Erro',
-                            text: err
+                            text: 'Ocorreu um erro inesperado! AddPost 2' + err
                         }))
-                     })
+                    })
                     .then(res => {
                         dispatch(fetchPosts())
                         dispatch(postCreated())
                     })
             })
+
     }
 }
 
@@ -43,7 +44,7 @@ export const addComment = payload => {
             .catch(err => {
                 dispatch(setMessage({
                     title: 'Erro',
-                    text: 'Ocorreu um erro inesperado'
+                    text: 'Ocorreu um erro inesperado ADDComent 1!' + err
                 }))
             })
             .then(res => {
@@ -53,7 +54,7 @@ export const addComment = payload => {
                     .catch(err => {
                         dispatch(setMessage({
                             title: 'Erro',
-                            text: 'Ocorreu um erro inesperado'
+                            text: 'Ocorreu um erro inesperado! AddComment 2' + err
                         }))
                     })
                     .then(res => {
@@ -76,7 +77,7 @@ export const fetchPosts = () => {
             .catch(err => {
                 dispatch(setMessage({
                     title: 'Erro',
-                    text: 'Ocorreu um erro inesperado'
+                    text: 'Ocorreu um erro inesperado! FetchPosts 1' + err
                 }))
             })
             .then(res => {
@@ -88,6 +89,7 @@ export const fetchPosts = () => {
                         id: key
                     })
                 }
+
                 dispatch(setPosts(posts.reverse()))
             })
     }

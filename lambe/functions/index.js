@@ -1,18 +1,18 @@
 const functions = require('firebase-functions');
-const cors = require('cors')({ origin: true })
+const cors = require('cors')({ origin: true})
 const fs = require('fs')
 const uuid = require('uuid-v4')
 const { Storage } = require('@google-cloud/storage')
-const storage = new Storage({ 
-    projectId: 'lambe-65c0a',
-    keyFilename: 'lambe-65c0a.json'
+const storage = new Storage({
+    projetId: 'lambe-134f8',
+    keyFilename: 'lambe-134f8.json'
 })
 
 exports.uploadImage = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         try {
             fs.writeFileSync('/tmp/imageToSave.jpg', request.body.image, 'base64')
-            const bucket = storage.bucket('lambe-65c0a.appspot.com')
+            const bucket = storage.bucket('lambe-134f8.appspot.com')
             const id = uuid()
             bucket.upload('/tmp/imageToSave.jpg', {
                 uploadType: 'media',
@@ -40,6 +40,3 @@ exports.uploadImage = functions.https.onRequest((request, response) => {
         }
     })
 });
-
-
-
